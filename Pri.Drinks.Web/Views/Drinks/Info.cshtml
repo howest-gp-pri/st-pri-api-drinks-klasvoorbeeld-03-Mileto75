@@ -1,0 +1,21 @@
+﻿@model DrinksInfoViewModel
+
+<div class="row">
+    <div class="col col-lg-3 mx-auto">
+        <div class="card">
+            <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
+            <img src="https://img.freepik.com/premium-vector/textured-craft-beer-pub-brewery-bar-logo_93208-269.jpg?w=200" class="card-img-top" alt="@Model.Name">
+            <div class="card-body text-center">
+                <h5 class="card-title">@Model.Name</h5>
+                <h5 class="card-title">@Model.Category.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@(Model.AlcoholPercentage)%</h6>
+                @foreach(var property in Model.Properties)
+                { 
+                    <p class="card-text">@property.Name</p>
+                }
+                <a asp-controller="Drinks" asp-action="Index" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
