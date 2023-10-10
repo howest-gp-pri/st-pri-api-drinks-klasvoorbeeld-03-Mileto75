@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pri.Drinks.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pri.Drinks.Api", "Pri.Drinks.Api\Pri.Drinks.Api.csproj", "{8CEAFFC0-7B65-40EF-8ED3-78853E8D86BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pri.MvcClient.Web", "Pri.MvcClient.Web\Pri.MvcClient.Web.csproj", "{6975219B-EF92-4C0B-B375-9374DA69DC61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8CEAFFC0-7B65-40EF-8ED3-78853E8D86BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CEAFFC0-7B65-40EF-8ED3-78853E8D86BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CEAFFC0-7B65-40EF-8ED3-78853E8D86BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6975219B-EF92-4C0B-B375-9374DA69DC61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6975219B-EF92-4C0B-B375-9374DA69DC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6975219B-EF92-4C0B-B375-9374DA69DC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6975219B-EF92-4C0B-B375-9374DA69DC61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
