@@ -19,5 +19,8 @@ namespace Pri.Drinks.Core.Interfaces.Services
         Task<ResultModel<Drink>> SearchByNameAsync(string search);
         Task<bool> ExistsAsync(int id);
         Task<ResultModel<Drink>> DeleteAsync(int id);
+        //a quick fix to get a list of categories and properties
+        Task<ResultModel<Property>> GetPropertiesAsync();
+        Task<ResultModel<Category>> GetCategoriesAsync();
     }
 }

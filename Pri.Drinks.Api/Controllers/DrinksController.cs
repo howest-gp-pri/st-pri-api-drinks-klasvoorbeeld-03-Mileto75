@@ -128,5 +128,37 @@ namespace Pri.Drinks.Api.Controllers
             }
             return Ok("Deleted");
         }
+        //this belongs in a separate CategoriesController
+        [HttpGet("properties")]
+        public async Task<IActionResult> GetProperties()
+        {
+            var properties = await _drinkService.GetPropertiesAsync();
+            var drinksGetPropertiesDto = new DrinksGetPropertiesDto
+            {
+                Items = properties.Items.Select(i =>
+                new BaseDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                })
+            };
+            return Ok(drinksGetPropertiesDto);
+        }
+        //this belongs in a separate CategoriesController
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetCategories()
+        {
+            var categories = await _drinkService.GetCategoriesAsync();
+            var drinksGetCategoriesDto = new DrinksGetCategories
+            {
+                Items = categories.Items.Select(i =>
+                new BaseDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                })
+            };
+            return Ok(drinksGetCategoriesDto);
+        }
     }
 }

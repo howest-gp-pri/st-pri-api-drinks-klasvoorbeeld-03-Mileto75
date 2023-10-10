@@ -131,6 +131,25 @@ namespace Pri.Drinks.Core.Services
             };
         }
 
+        public async Task<ResultModel<Category>> GetCategoriesAsync()
+        {
+            return new ResultModel<Category>
+            {
+                IsSuccess = true,
+                Items = await _categoryRepository.GetAllAsync()
+            };
+        }
+
+        public async Task<ResultModel<Property>> GetPropertiesAsync()
+        {
+            return new ResultModel<Property>
+            {
+                IsSuccess = true,
+                Items = await _propertyRepository.GetAllAsync()
+            };
+        }
+
+
         public async Task<ResultModel<Drink>> SearchByNameAsync(string search)
         {
             //use the IQueryable

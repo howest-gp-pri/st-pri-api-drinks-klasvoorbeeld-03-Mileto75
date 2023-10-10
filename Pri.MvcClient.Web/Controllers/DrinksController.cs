@@ -44,5 +44,6 @@ namespace Pri.MvcClient.Web.Controllers
                 JsonConvert.DeserializeObject<DrinksGetViewModel>(content);
             return View(drinksGetViewModel);
         }
+            
     }
 }
