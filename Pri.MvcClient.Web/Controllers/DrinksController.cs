@@ -7,14 +7,18 @@ namespace Pri.MvcClient.Web.Controllers
     public class DrinksController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
+        private readonly string _baseUrl;
 
-        public DrinksController()
+        public DrinksController(IConfiguration configuration)
         {
             _httpClient = new HttpClient();
+            _configuration = configuration;
+            _baseUrl = $"{_configuration.GetSection("ApiUrl:BaseUrl").Value}/Drinks";
         }
         public async Task<IActionResult> Index()
         {
-            var url = new Uri("https://localhost:7295/api/Drinks");
+            var url = new Uri(_baseUrl);
             var result = await _httpClient.GetAsync(url);
             if(!result.IsSuccessStatusCode)
             {
@@ -27,7 +31,7 @@ namespace Pri.MvcClient.Web.Controllers
         }
         public async Task<IActionResult> Get(int id)
         {
-            var url = new Uri($"https://localhost:7295/api/Drinks/{id}");
+            var url = new Uri($"{_baseUrl}/{id}");
             var result = await _httpClient.GetAsync(url);
             if(!result.IsSuccessStatusCode)
             {
