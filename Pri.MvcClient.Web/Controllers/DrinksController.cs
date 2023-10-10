@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Pri.MvcClient.Web.ViewModels;
 
@@ -43,6 +44,45 @@ namespace Pri.MvcClient.Web.Controllers
             var drinksGetViewModel =
                 JsonConvert.DeserializeObject<DrinksGetViewModel>(content);
             return View(drinksGetViewModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            //get the categories
+            var categoryUrl = new Uri($"{_baseUrl}/categories");
+            var result = await _httpClient.GetAsync(categoryUrl);
+            var content = await result.Content.ReadAsStringAsync();
+            var categories = JsonConvert
+                .DeserializeObject<BaseItemsViewModel>(content);
+            //get the properties
+            var propertyUrl = new Uri($"{_baseUrl}/properties");
+            result = await _httpClient.GetAsync(propertyUrl);
+            content = await result.Content.ReadAsStringAsync();
+            var properties = JsonConvert.DeserializeObject<BaseItemsViewModel>(content);
+            //populate form data properties and categories
+            //create the model
+            var drinksAddViewModel = new DrinksAddViewModel
+            {
+                Properties = properties.Items.Select(i =>
+                new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                Categories = categories.Items.Select(i =>
+                new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
+            //pass tot the view
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(DrinksAddViewModel drinksAddViewModel)
+        {
+            return RedirectToAction();
         }
             
     }
