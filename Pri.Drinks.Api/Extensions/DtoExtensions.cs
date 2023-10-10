@@ -44,5 +44,25 @@ namespace Pri.Drinks.Api.Extensions
             //}
             //drinksGetAllDto.Drinks = drinksDtoList;
         }
+        //Map from entity class to dto
+        public static DrinksGetByIdDto MapToDto(this Drink drink)
+        {
+            return new DrinksGetByIdDto
+            {
+                Id = drink.Id,
+                Name = drink.Name,
+                AlcoholPercentage = drink.AlcoholPercentage,
+                Properties = drink.Properties.Select(p => new BaseDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                }),
+                Category = new BaseDto
+                {
+                    Id = drink.Category.Id,
+                    Name = drink.Category.Name,
+                }
+            };
+        }
     }
 }
