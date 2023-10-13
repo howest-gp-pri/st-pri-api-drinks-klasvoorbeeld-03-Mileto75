@@ -113,29 +113,7 @@ namespace Pri.MvcClient.Web.Controllers
                 });
                 return View(drinksAddViewModel);
             }
-            var serializedContent = JsonConvert.SerializeObject(drinksAddViewModel);
-            var stringContent = new StringContent(serializedContent, Encoding.UTF8, "application/json");
-            var postResult = await _httpClient.PostAsync(_baseUrl, stringContent);
-            var postContent = await postResult.Content.ReadAsStringAsync();
-            if (postResult.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
-
-            //api error
-            ModelState.AddModelError("", "Something went wrong, please try again later...");
-            drinksAddViewModel.Properties = properties.Items.Select(i =>
-            new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            drinksAddViewModel.Categories = categories.Items.Select(i =>
-            new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            
             return View(drinksAddViewModel);
         }
         [HttpGet]
