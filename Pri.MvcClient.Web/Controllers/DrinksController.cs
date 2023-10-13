@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Pri.MvcClient.Web.Models;
 using Pri.MvcClient.Web.ViewModels;
+using System.Text;
 
 namespace Pri.MvcClient.Web.Controllers
 {
@@ -77,12 +80,74 @@ namespace Pri.MvcClient.Web.Controllers
                 }),
             };
             //pass tot the view
-            return View();
+            return View(drinksAddViewModel);
         }
         [HttpPost]
         public async Task<IActionResult> Add(DrinksAddViewModel drinksAddViewModel)
         {
-            return RedirectToAction();
+            //get the categories
+            var categoryUrl = new Uri($"{_baseUrl}/categories");
+            var result = await _httpClient.GetAsync(categoryUrl);
+            var content = await result.Content.ReadAsStringAsync();
+            var categories = JsonConvert
+                .DeserializeObject<BaseItemsViewModel>(content);
+            //get the properties
+            var propertyUrl = new Uri($"{_baseUrl}/properties");
+            result = await _httpClient.GetAsync(propertyUrl);
+            content = await result.Content.ReadAsStringAsync();
+            var properties = JsonConvert.DeserializeObject<BaseItemsViewModel>(content);
+            //modelstate error
+            if (!ModelState.IsValid)
+            {
+                drinksAddViewModel.Properties = properties.Items.Select(i =>
+                new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                drinksAddViewModel.Categories = categories.Items.Select(i =>
+                new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                return View(drinksAddViewModel);
+            }
+            var serializedContent = JsonConvert.SerializeObject(drinksAddViewModel);
+            var stringContent = new StringContent(serializedContent, Encoding.UTF8, "application/json");
+            var postResult = await _httpClient.PostAsync(_baseUrl, stringContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+            if (postResult.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            //api error
+            ModelState.AddModelError("", "Something went wrong, please try again later...");
+            drinksAddViewModel.Properties = properties.Items.Select(i =>
+            new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            drinksAddViewModel.Categories = categories.Items.Select(i =>
+            new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            return View(drinksAddViewModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Uri deleteUrl = new Uri($"{_baseUrl}/{id}");
+            var result = await _httpClient.DeleteAsync(deleteUrl);
+            if(result.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error", "Home");
         }
             
     }

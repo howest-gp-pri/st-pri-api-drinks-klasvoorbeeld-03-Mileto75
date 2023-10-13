@@ -10,6 +10,7 @@ namespace Pri.Drinks.Api.DTOs.Request
         public int CategoryId { get; set; }
         [Range(0,60)]
         public int AlcoholPercentage { get; set; }
+        [Required]
         public IEnumerable<int> PropertyIds { get; set; }
     }
 }

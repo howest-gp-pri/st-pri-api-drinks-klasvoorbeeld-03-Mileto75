@@ -114,7 +114,7 @@ namespace Pri.Drinks.Api.Controllers
             }
             return Ok("Updated");
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             if(!await  _drinkService.ExistsAsync(id))
