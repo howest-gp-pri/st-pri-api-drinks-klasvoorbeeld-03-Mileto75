@@ -119,12 +119,6 @@ namespace Pri.MvcClient.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            Uri deleteUrl = new Uri($"{_baseUrl}/{id}");
-            var result = await _httpClient.DeleteAsync(deleteUrl);
-            if(result.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
             return RedirectToAction("Error", "Home");
         }
     
